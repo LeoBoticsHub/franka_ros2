@@ -32,4 +32,9 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/
 )
 
+# fix of GZ_SIM_RESOURCE_PATH for finding models: https://github.com/frankaemika/franka_description/pull/1
+ament_environment_hooks(
+  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.sh.in")
+
+
 ament_package()

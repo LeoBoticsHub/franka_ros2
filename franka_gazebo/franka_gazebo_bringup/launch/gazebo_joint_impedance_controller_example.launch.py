@@ -90,7 +90,7 @@ def prepare_launch_description():
             description='Default value: franka_hand')
     arm_id_launch_argument = DeclareLaunchArgument(
             arm_id_name,
-            default_value='fr3',
+            default_value='fer',
             description='Available values: fr3, fp3 and fer')
 
     # Get robot description
