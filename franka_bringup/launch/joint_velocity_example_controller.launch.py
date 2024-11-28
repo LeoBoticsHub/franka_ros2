@@ -40,10 +40,11 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             robot_ip_parameter_name,
+            default_value='192.168.0.201',
             description='Hostname or IP address of the robot.'),
         DeclareLaunchArgument(
             arm_id_parameter_name,
-            default_value='fr3',
+            default_value='fer',
             description='ID of the type of arm used. Supported values: fer, fr3, fp3'),
         DeclareLaunchArgument(
             use_rviz_parameter_name,

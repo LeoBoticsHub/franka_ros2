@@ -86,19 +86,50 @@ CallbackReturn JointVelocityExampleController::on_configure(
     const rclcpp_lifecycle::State& /*previous_state*/) {
   is_gazebo = get_node()->get_parameter("gazebo").as_bool();
 
+  // Get the current namespace dynamically
+  std::string robot_namespace = get_node()->get_namespace();
+
+  // Construct the parameter path dynamically
+  std::string parameter_path;
+  if (robot_namespace == "/") {
+      // No namespace, use only the parameter name
+      parameter_path = "robot_state_publisher";
+  } else {
+      // Prepend the namespace to the parameter name
+      parameter_path = robot_namespace + "/robot_state_publisher";
+  }
+
+  // Create the parameters client with the dynamically constructed path
   auto parameters_client =
-      std::make_shared<rclcpp::AsyncParametersClient>(get_node(), "/robot_state_publisher");
+      std::make_shared<rclcpp::AsyncParametersClient>(get_node(), parameter_path);
+
+  // Wait for the service to be available
   parameters_client->wait_for_service();
+
+
+  // Changed to take into account namespaces
+  // auto parameters_client =
+  //     std::make_shared<rclcpp::AsyncParametersClient>(get_node(), "/robot_state_publisher");  
+  // parameters_client->wait_for_service();
+
+
 
   auto future = parameters_client->get_parameters({"robot_description"});
   auto result = future.get();
+
+
   if (!result.empty()) {
     robot_description_ = result[0].value_to_string();
+    
   } else {
     RCLCPP_ERROR(get_node()->get_logger(), "Failed to get robot_description parameter.");
   }
 
+
+
   arm_id_ = robot_utils::getRobotNameFromDescription(robot_description_, get_node()->get_logger());
+
+
 
   if (!is_gazebo) {
     auto client = get_node()->create_client<franka_msgs::srv::SetFullCollisionBehavior>(
@@ -116,6 +147,8 @@ CallbackReturn JointVelocityExampleController::on_configure(
       RCLCPP_INFO(get_node()->get_logger(), "Default collision behavior set.");
     }
   }
+
+
 
   return CallbackReturn::SUCCESS;
 }
