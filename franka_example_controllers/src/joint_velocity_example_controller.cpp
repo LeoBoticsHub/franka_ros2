@@ -107,7 +107,7 @@ CallbackReturn JointVelocityExampleController::on_configure(
   parameters_client->wait_for_service();
 
 
-  // Changed to take into account namespaces
+  // //Changed to take into account namespaces
   // auto parameters_client =
   //     std::make_shared<rclcpp::AsyncParametersClient>(get_node(), "/robot_state_publisher");  
   // parameters_client->wait_for_service();
