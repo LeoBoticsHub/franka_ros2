@@ -34,15 +34,15 @@ ControlLoop<T>::ControlLoop(RobotControl& robot,
       control_callback_(std::move(control_callback)),
       limit_rate_(limit_rate),
       cutoff_frequency_(cutoff_frequency) {
-  // bool throw_on_error = robot_.realtimeConfig() == RealtimeConfig::kEnforce;
-  bool throw_on_error = robot_.realtimeConfig() == RealtimeConfig::kIgnore;
+  bool throw_on_error = robot_.realtimeConfig() == RealtimeConfig::kEnforce;
+  // bool throw_on_error = robot_.realtimeConfig() == RealtimeConfig::kIgnore;
   std::string error_message;
-  // if (!setCurrentThreadToHighestSchedulerPriority(&error_message) && throw_on_error) {
-  //   throw RealtimeException(error_message);
-  // }
-  // if (throw_on_error && !hasRealtimeKernel()) {
-  //   throw RealtimeException("libfranka: Running kernel does not have realtime capabilities.");
-  // }
+  if (!setCurrentThreadToHighestSchedulerPriority(&error_message) && throw_on_error) {
+    throw RealtimeException(error_message);
+  }
+  if (throw_on_error && !hasRealtimeKernel()) {
+    throw RealtimeException("libfranka: Running kernel does not have realtime capabilities.");
+  }
 }
 
 template <typename T>
