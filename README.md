@@ -31,8 +31,11 @@ This package is in rapid development. Users should expect breaking changes and a
 Before installing **franka_ros2**, ensure you have the following prerequisites:
 - **ROS 2 Humble Installation:** You can install [`ros-humble-desktop`](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)  or use VSCode IDE with DevContainer. 
 - **PREEMPT_RT Kernel (optional but recommended):** A real-time kernel is necessary for the cartesian_pose, joint_position, and elbow_position command interfaces.
+Informations on how to use a real-time kernel on a Linux machine can be found [at this link].(https://ubuntu.com/blog/enable-real-time-ubuntu)
 - **System-wide libfranka Installation:** 
     - If you plan to **install from source**, a libfranka installation is required. Please refer to the [libfranka repository](https://github.com/frankaemika/libfranka) for detailed build steps.
+    This repository has been tested to work with the following versions of libfranka:
+      - 0.14.1
     - If you are **using the DevContainer**, you do not need to install libfranka system-wide, as it will be included in the container.
 
     Regardless of your setup, it is important to check the compatibility of your Robot OS version with libfranka to avoid potential errors. For detailed compatibility information, please consult the [libfranka compatibility matrix](https://frankaemika.github.io/docs/compatibility.htmlk-to-matrix).
@@ -82,10 +85,9 @@ export RCUTILS_COLORIZED_OUTPUT=1
    ```bash
     source /opt/ros/humble/setup.bash
     cd ~/franka_ros2_ws 
-    git clone https://github.com/frankaemika/franka_ros2.git src/franka_ros2 
-    git clone https://github.com/frankaemika/franka_description.git src/franka_description 
-    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release 
-    source install/setup.sh
+    git clone https://github.com/LeoBoticsHub/franka_ros2.git -b devel_alessandro src/franka_ros2
+    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+    source install/setup.bash
     ``` 
 
 ### Use VSCode DevContainer
