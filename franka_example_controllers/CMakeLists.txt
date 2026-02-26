@@ -16,6 +16,8 @@ option(CHECK_TIDY "Adds clang-tidy tests" OFF)
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(realtime_tools REQUIRED)
 find_package(controller_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
@@ -37,6 +39,7 @@ add_library(
         src/cartesian_pose_example_controller.cpp
         src/joint_impedance_with_ik_example_controller.cpp
         src/cartesian_elbow_example_controller.cpp
+        src/forward_torque_controller.cpp
         src/cartesian_orientation_example_controller.cpp
         src/elbow_example_controller.cpp
         src/model_example_controller.cpp
@@ -58,6 +61,7 @@ ament_target_dependencies(
         franka_semantic_components
         moveit_core
         moveit_msgs
+        realtime_tools
 )
 
 pluginlib_export_plugin_description_file(
