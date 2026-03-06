@@ -31,7 +31,7 @@ This package is in rapid development. Users should expect breaking changes and a
 Before installing **franka_ros2**, ensure you have the following prerequisites:
 - **ROS 2 Humble Installation:** You can install [`ros-humble-desktop`](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)  or use VSCode IDE with DevContainer. 
 - **PREEMPT_RT Kernel (optional but recommended):** A real-time kernel is necessary for the cartesian_pose, joint_position, and elbow_position command interfaces.
-Informations on how to use a real-time kernel on a Linux machine can be found [at this link].(https://ubuntu.com/blog/enable-real-time-ubuntu)
+Informations on how to use a real-time kernel on a Linux machine can be found [at this link](https://ubuntu.com/blog/enable-real-time-ubuntu).
 - **System-wide libfranka Installation:** 
     - If you plan to **install from source**, a libfranka installation is required. Please refer to the [libfranka repository](https://github.com/frankaemika/libfranka) for detailed build steps.
     This repository has been tested to work with the following versions of libfranka:
