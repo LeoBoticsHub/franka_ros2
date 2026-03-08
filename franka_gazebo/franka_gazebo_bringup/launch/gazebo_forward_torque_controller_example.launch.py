@@ -99,12 +99,14 @@ def prepare_launch_description():
         args=[arm_id, load_gripper, franka_hand])
 
     # Gazebo Sim
+    # TODO: This launches gazebo in headless mode. To Fix
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     gazebo_empty_world = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': 'empty.sdf -r', }.items(),
+        launch_arguments={'gz_args': 'empty.sdf -r -s', 'ign_args': 'empty.sdf -r -s'}.items(),
     )
+
 
     # Spawn
     spawn = Node(
