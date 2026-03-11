@@ -154,7 +154,7 @@ If you encounter a UDP receive timeout error while communicating with the robot,
 
 A real-time kernel is essential to ensure proper communication and to prevent timeout issues. For guidance on setting up a real-time kernel, please refer to the [Franka installation documentation](https://frankarobotics.github.io/docs/libfranka/docs/real_time_kernel.html).
 
-## Running Without Realtime Kernel
+### `Running Without Realtime Kernel`
 If your PC performance are good enough there is a way of commanding the the robot without requiring a real-time kernel. To enable operation without real-time kernel you need to modify two scripts contained in `libfranka-active-control/src`:
 - `control_loop.cpp`
 - `robot_impl.h`
