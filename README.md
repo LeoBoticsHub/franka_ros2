@@ -158,6 +158,7 @@ A real-time kernel is essential to ensure proper communication and to prevent ti
 If your PC performance are good enough there is a way of commanding the the robot without requiring a real-time kernel. To enable operation without real-time kernel you need to modify two scripts contained in `libfranka-active-control/src`:
 - `control_loop.cpp`
 - `robot_impl.h`
+
 By commenting out certain lines of code and uncommenting others it is possible to bypass the realtime kernel need.
 The two scripts already contain information about which lines need to be commented/uncommented so you can use an IDE to make the changes.
 Once you do so, remember to re-build your workspace and source it or your changes won't take effect.
