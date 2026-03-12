@@ -42,7 +42,7 @@ Informations on how to use a real-time kernel on a Linux machine can be found [a
     **Attention:** Version 0.9.3 is not an official release of libfranka. Instructions on how to install this version are given in the [Libfranka Installation](#libfranka-installation) of this readme.
     - If you are **using the DevContainer**, you do not need to install libfranka system-wide, as it will be included in the container.
 
-    Regardless of your setup, it is important to check the compatibility of your Robot OS version with libfranka to avoid potential errors. For detailed compatibility information, please consult the [libfranka compatibility matrix](https://frankaemika.github.io/docs/compatibility.htmlk-to-matrix).
+    Regardless of your setup, it is important to check the compatibility of your Robot OS version with libfranka to avoid potential errors. For detailed compatibility information, please consult the [libfranka compatibility table](https://frankarobotics.github.io/docs/libfranka/docs/compatibility_with_images.html).
 
 ## Optional .bashrc Settings
 Enhance your development experience by adding the following line to your `.bashrc` file:
@@ -53,6 +53,36 @@ export RCUTILS_COLORIZED_OUTPUT=1
 ```
 
 ## Libfranka Installation
+A system-wide libfranka installation is required. To communicate with the real robot, either version 0.9.2 or 0.9.3 of libfranka is
+required as a first step.
+
+### Installing ``libfranka 0.9.2``
+
+1. Clone the ``0.9.2`` version of the libfranka repository on your PC:
+```bash
+git clone https://github.com/frankarobotics/libfranka.git
+git checkout 0.9.2
+git submodule init
+git submodule update
+```
+
+2. Build Libfranka
+```bash
+cd libfranka
+mkdir build && cd build
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_PATH=/opt/openrobots/lib -DCMAKE_PREFIX_PATH=/opt/openrobots/ ..
+make franka -j$(nproc)
+cpack -G DEB
+sudo dpkg -i libfranka*.deb
+sudo mae install
+```
+
+This should setup a system-wide installation of libfranka 0.9.2.
+
+**Note:** Using libfranka 0.9.2 may lead to some missing dependencies issue. If this happens, refer to the [Troubleshooting](#troubleshooting) section of this readme.
+
+### Installing ``libfranka 0.9.3``
+As this is not an official release of libfranka, the user can install this version as described in the [Setup](#setup) section of this readme.
 
 ## Setup
 
@@ -87,18 +117,31 @@ export RCUTILS_COLORIZED_OUTPUT=1
    ```bash
    mkdir -p ~/franka_ros2_ws/src
    ```
-3. **Clone the Repositories and Build Packages:**
+3. **Clone the Repositories:**
    ```bash
     source /opt/ros/humble/setup.bash
     cd ~/franka_ros2_ws 
     git clone https://github.com/LeoBoticsHub/franka_ros2.git -b devel_alessandro src/franka_ros2
+    ```
+
+4. **Install ``libfranka 0.9.3``:**
+    Skip this step if you already installed ``libfranka 0.9.2``.
+
+    ```bash
+    cd ~/franka_ros2_ws/src/franka_ros2/libfranka-active-control
+    mkdir build && cd build
+    cmake -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_PATH=/opt/openrobots/lib -DCMAKE_PREFIX_PATH=/opt/openrobots/ ..
+    make franka -j$(nproc)
+    cpack -G DEB
+    sudo dpkg -i libfranka*.deb
+    sudo mae install
+    ```
+5. **Build and Source the Workspace**
+    ```bash
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     source install/setup.bash
-    ``` 
-
+    ```
 ### Use VSCode DevContainer
-
-
 The `franka_ros2` package includes a `.devcontainer` folder, which allows you to use Franka ROS 2 packages without manually installing ROS 2 or `libfranka`. For detailed instructions, follow the setup guide from [VSCode devcontainer_setup](https://code.visualstudio.com/docs/devcontainers/tutorial).
 
 1. **Create a ROS 2 Workspace:**
