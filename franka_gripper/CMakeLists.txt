@@ -20,7 +20,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
 
 # find_package(Franka 0.13.2 REQUIRED)
-find_package(Franka 0.9.3 REQUIRED)
+find_package(Franka 0.9.2 REQUIRED)
 
 add_library(gripper_server SHARED
         src/gripper_action_server.cpp)
