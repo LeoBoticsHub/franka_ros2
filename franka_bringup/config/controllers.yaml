@@ -41,6 +41,9 @@ controller_manager:
     joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
+    forward_torque_controller:
+      type: franka_example_controllers/ForwardTorqueController
+
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
     
