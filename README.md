@@ -16,6 +16,7 @@
   - [Install From Source](#install-from-source)
   - [Use VSCode DevContainer](#use-vscode-devcontainer)
   - [Test the Setup](#test-the-setup)
+  - [Running on Real Hardware](#running-on-real-hardware)
 - [Troubleshooting](#troubleshooting)
   - [libfranka: UDP receive: Timeout error](#libfranka-udp-receive-timeout-error)
   - [Running Without Realtime Kernel](#running-without-realtime-kernel)
@@ -193,6 +194,10 @@ To verify that your setup works correctly without a robot, you can run the follo
 ```bash
 ros2 launch franka_fr3_moveit_config moveit.launch.py robot_ip:=dont-care use_fake_hardware:=true
 ```
+
+## Running on Real Hardware
+To interface the ros2_control with the Franka Emika Panda Hardware one can refere to this [guide]().
+
 
 
 ## Troubleshooting
