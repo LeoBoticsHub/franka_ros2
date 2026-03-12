@@ -11,6 +11,7 @@
 - [Caution](#caution)
 - [Prerequisites](#prerequisites)
 - [Optional .bashrc Settings](#optional-bashrc-settings)
+- [Libfranka Installation](#libfranka-installation)
 - [Setup](#setup)
   - [Install From Source](#install-from-source)
   - [Use VSCode DevContainer](#use-vscode-devcontainer)
@@ -36,7 +37,9 @@ Informations on how to use a real-time kernel on a Linux machine can be found [a
 - **System-wide libfranka Installation:** 
     - If you plan to **install from source**, a libfranka installation is required. Please refer to the [libfranka repository](https://github.com/frankaemika/libfranka) for detailed build steps.
     This repository has been tested to work with the following versions of libfranka:
-      - 0.14.1
+      - 0.9.2
+      - 0.9.3
+    **Attention:** Version 0.9.3 is not an official release of libfranka. Instructions on how to install this version are given in the [Libfranka Installation](#libfranka-installation) of this readme.
     - If you are **using the DevContainer**, you do not need to install libfranka system-wide, as it will be included in the container.
 
     Regardless of your setup, it is important to check the compatibility of your Robot OS version with libfranka to avoid potential errors. For detailed compatibility information, please consult the [libfranka compatibility matrix](https://frankaemika.github.io/docs/compatibility.htmlk-to-matrix).
@@ -48,6 +51,8 @@ Enhance your development experience by adding the following line to your `.bashr
 # Enable colorized warn and error messages
 export RCUTILS_COLORIZED_OUTPUT=1
 ```
+
+## Libfranka Installation
 
 ## Setup
 
