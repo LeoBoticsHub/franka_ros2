@@ -196,7 +196,7 @@ ros2 launch franka_fr3_moveit_config moveit.launch.py robot_ip:=dont-care use_fa
 ```
 
 ## Running on Real Hardware
-To interface the ros2_control with the Franka Emika Panda Hardware one can refere to this [guide]().
+To interface the ros2_control with the Franka Emika Panda Hardware one can refere to this [guide](https://github.com/LeoBoticsHub/franka_ros2/blob/devel_alessandro/Docs/Instructions/interface_with_hardware.md).
 
 
 
