@@ -8,7 +8,7 @@
                       dynamics
                       parent:='world'
                       xyz:='0 0 0'
-                      rpy:='0 0 0'
+                      rpy:='0 0 ${-pi/4}'
                       hand:='true'
                       ee_id:=none
                       gazebo:='false'
@@ -25,7 +25,7 @@
     <xacro:franka_arm
       arm_id="${arm_id}"
       xyz="${xyz}"
-      rpy="${rpy}"
+      rpy='0 0 0'
       safety_distance="0.03"
       gazebo="${gazebo}"
       joint_limits="${joint_limits}"
@@ -90,7 +90,7 @@
           <link name="${parent}" />
         </xacro:if>
         <joint name="${parent}_joint" type="fixed">
-          <origin xyz="${xyz}" rpy="${rpy}" />
+          <origin xyz="${xyz}" rpy="0 0 0" />
           <parent link="${parent}" />
           <child  link="${arm_id}_link0" />
         </joint>
