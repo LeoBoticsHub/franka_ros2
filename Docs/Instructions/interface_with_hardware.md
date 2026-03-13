@@ -14,7 +14,7 @@ Two identical Franka Emika Panda robots are available for usage. Their respectiv
 To power on one of the robots, simply press the start button placed at the back of the corresponding control box.
 
 Once you do so, the two led strips at the base of the robot will start to blink yellow.
-Once the leds stop blinking, the robot is ready for usage but its motors still need to be powered on and the brakes released.
+Once the leds stop blinking, the robot is ready for usage but its brakes still need to be released.
 
 This can be easily done through ``Franka Desk`` once we establish a connection between the robot and our pc.
 
@@ -28,7 +28,7 @@ The robots and your pc can be connected via ethernet as follows:
 ping 192.168.0.201
 ```
 
-Once this step is completed, you can proceed to releasing the brakes of the robot and activating the motors via Franka Desk.
+Once this step is completed, you can proceed to releasing the brakes of the robot via Franka Desk.
 
 ## Franka Desk
 Franka Desk is the application used to program and monitor the state of Franka robots.
@@ -49,3 +49,39 @@ You will hear a clicking sound which are the barkes being released. The robot le
 - While navigating to Desk, it may be necessary to bypass a security message telling you that the connection you want to establish is not secure.
 
 ## External Buttons
+Each robot is provided with two external buttons which are connected to it:
+- **Black Button:** By pressing or releasing the black button it is possible to toggle between two robot states indicated by the color that the led at the Franka base assume:
+  - **White Led:** Manual mode active. In this case it is possible to move the robot with hand guiding or to jog it from desk.
+  - **Blue Led:** Automatic mode is enabled. In this case it is possible to run programs made with the Desk app or to command the robot through FCI.
+ **Red Button:** By pressing the red button the robot goes into emergency stop, cutting the power to the motors and inserting the brakes. When releasing, motors will again be turned on leading to the state where motors are on but brakes are inserted (yellow led light). You can unlock the brakes through the Desk app as explained [here](#franka-desk).
+
+## Activating FCI
+To control the Franka Emika Panda Robot with ROS 2 you need to enable FCI from the Franka Desk app.
+
+First make sure that the robot is in automatic mode (blue led light), then go to the Desk app and select ``Activate FCI``.
+
+A message should pop up telling you that while FCI is active, desk cannot be used.
+
+To turn off FCI, simply click on the ``Deactivate FCI `` button which will be available via desk.
+
+## Run an Example Controller
+This section is a tutorial on how to run the ``move_to_start_example_controller`` found in the ``franka_example_controllers`` package.
+With the robot in manual mode, use the hand guiding functionality to place the robot in a configuration of your choice. Please refer to [Franka's Official Video Tutorials](https://www.youtube.com/playlist?list=PL9FoYHNFGS3TyHsLcL0-qNIi-e14Xw7np) to use hand-guiding on the robot.
+
+Now release the black button to activate automatic mode (blue led) and enable FCI as explained in the previous section.
+
+Open a terminal and enter the workspace where you cloned ``franka_ros2`` and source it:
+```bash
+cd ~/franka_ros2_ws
+source install/setup.bash
+```
+
+Finally run the controller with the following command:
+```bash
+ros2 launch franka_bringup move_to_start_example_controller.launch.py robot_ip:=192.168.0.201 arm_id:=fer load_gripper:=true
+
+```
+
+**Attention:** The various controllers inside the ``franka_example_controllers`` package will only work if you pass as launch argument
+``arm_id:=fer`` which stands for `Franka Emika Panda`. This is because launchers are generic and will also work with the newer Franka R
+esearch 3 (fr3) robots.
