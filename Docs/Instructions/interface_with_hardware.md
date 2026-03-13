@@ -53,7 +53,7 @@ Each robot is provided with two external buttons which are connected to it:
 - **Black Button:** By pressing or releasing the black button it is possible to toggle between two robot states indicated by the color that the led at the Franka base assume:
   - **White Led:** Manual mode active. In this case it is possible to move the robot with hand guiding or to jog it from desk.
   - **Blue Led:** Automatic mode is enabled. In this case it is possible to run programs made with the Desk app or to command the robot through FCI.
- **Red Button:** By pressing the red button the robot goes into emergency stop, cutting the power to the motors and inserting the brakes. When releasing, motors will again be turned on leading to the state where motors are on but brakes are inserted (yellow led light). You can unlock the brakes through the Desk app as explained [here](#franka-desk).
+- **Red Button:** By pressing the red button the robot goes into emergency stop, cutting the power to the motors and inserting the brakes. When releasing, motors will again be turned on leading to the state where motors are on but brakes are inserted (yellow led light). You can unlock the brakes through the Desk app as explained [here](#franka-desk).
 
 ## Activating FCI
 To control the Franka Emika Panda Robot with ROS 2 you need to enable FCI from the Franka Desk app.
