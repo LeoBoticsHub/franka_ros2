@@ -135,7 +135,7 @@ As this is not an official release of libfranka, the user can install this versi
     make franka -j$(nproc)
     cpack -G DEB
     sudo dpkg -i libfranka*.deb
-    sudo mae install
+    sudo make install
     ```
 5. **Build and Source the Workspace**
     ```bash
