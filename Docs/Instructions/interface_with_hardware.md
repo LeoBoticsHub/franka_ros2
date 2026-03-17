@@ -40,8 +40,10 @@ This will open up the desk app on your pc.
 
 2. **Release the Brakes**
 Once you're logged in, you can release the brakes by clicking on the ``open lock`` icon found on the right under the joints tab.
-
-You will hear a clicking sound which are the barkes being released. The robot leds will then turn either blue or white depending on the state of the external buttons as explained in the following section.
+<p align="center">
+  <img src="../Images/desk_img.png" alt="Brake Release" width="80%">
+</p>
+You will hear a clicking sound which are the brakes being released. The robot leds will then turn either blue or white depending on the state of the external buttons as explained in the following section.
 
 **Notes**
 - If it's the first time you access the desk app, the system may require username and password. These can be found in the Leonardo Innovation Hub Github repository.
@@ -50,7 +52,7 @@ You will hear a clicking sound which are the barkes being released. The robot le
 
 ## External Buttons
 Each robot is provided with two external buttons which are connected to it:
-- **Black Button:** By pressing or releasing the black button it is possible to toggle between two robot states indicated by the color that the led at the Franka base assume:
+- **Black Button:** By pressing or releasing the black button it is possible to toggle between two robot states indicated by the color that the leds at the Franka base assume:
   - **White Led:** Manual mode active. In this case it is possible to move the robot with hand guiding or to jog it from desk.
   - **Blue Led:** Automatic mode is enabled. In this case it is possible to run programs made with the Desk app or to command the robot through FCI.
 - **Red Button:** By pressing the red button the robot goes into emergency stop, cutting the power to the motors and inserting the brakes. When releasing, motors will again be turned on leading to the state where motors are on but brakes are inserted (yellow led light). You can unlock the brakes through the Desk app as explained [here](#franka-desk).
@@ -81,6 +83,7 @@ Finally run the controller with the following command:
 ros2 launch franka_bringup move_to_start_example_controller.launch.py robot_ip:=192.168.0.201 arm_id:=fer load_gripper:=true
 
 ```
+The robot should move back to a default start configuration.
 
 **Attention:** The various controllers inside the ``franka_example_controllers`` package will only work if you pass as launch argument
 ``arm_id:=fer`` which stands for `Franka Emika Panda`. This is because launchers are generic and will also work with the newer Franka R
