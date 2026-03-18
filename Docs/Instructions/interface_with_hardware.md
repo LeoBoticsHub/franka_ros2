@@ -41,7 +41,7 @@ This will open up the desk app on your pc.
 2. **Release the Brakes**
 Once you're logged in, you can release the brakes by clicking on the ``open lock`` icon found on the right under the joints tab.
 <p align="center">
-  <img src="../Images/desk_img.png" alt="Brake Release" width="80%">
+  <img src="../Images/brakes_locked.png" alt="Brake Release" width="90%">
 </p>
 You will hear a clicking sound which are the brakes being released. The robot leds will then turn either blue or white depending on the state of the external buttons as explained in the following section.
 
@@ -53,18 +53,34 @@ You will hear a clicking sound which are the brakes being released. The robot le
 ## External Buttons
 Each robot is provided with two external buttons which are connected to it:
 - **Black Button:** By pressing or releasing the black button it is possible to toggle between two robot states indicated by the color that the leds at the Franka base assume:
-  - **White Led:** Manual mode active. In this case it is possible to move the robot with hand guiding or to jog it from desk.
+  - **White Led:** Stopped mode active. In this case it is possible to move the robot with hand guiding or to jog it from desk. It is not possible to command it from an external pc or to run programs made with Desk.
+  <p align="center">
+    <img src="../Images/stopped.png" alt = "Stopped" width = "80%">
+  </p>
+
   - **Blue Led:** Automatic mode is enabled. In this case it is possible to run programs made with the Desk app or to command the robot through FCI.
+  Make sure to stand clear of the robot before executing any programs.
+  <p align="center">
+    <img src="../Images/ready.png" alt = "Stopped" width = "80%">
+  </p>
 - **Red Button:** By pressing the red button the robot goes into emergency stop, cutting the power to the motors and inserting the brakes. When releasing, motors will again be turned on leading to the state where motors are on but brakes are inserted (yellow led light). You can unlock the brakes through the Desk app as explained [here](#franka-desk).
 
 ## Activating FCI
 To control the Franka Emika Panda Robot with ROS 2 you need to enable FCI from the Franka Desk app.
 
 First make sure that the robot is in automatic mode (blue led light), then go to the Desk app and select ``Activate FCI``.
+<p align="center">
+<img src="../Images/FCI_step_1.png" alt = "Activate FCI Step 1" width = "%">
+<img src="../Images/FCI_step_2.png" alt = "Activate FCI Step 2", width = "100%">
+</p>
 
 A message should pop up telling you that while FCI is active, desk cannot be used.
 
-To turn off FCI, simply click on the ``Deactivate FCI `` button which will be available via desk.
+  <p align="center">
+    <img src="../Images/FCI_active.png" alt = "Stopped" width = "100%">
+  </p>
+
+To turn off FCI, simply click on the ``Deactivate FCI`` button.
 
 ## Run an Example Controller
 This section is a tutorial on how to run the ``move_to_start_example_controller`` found in the ``franka_example_controllers`` package.
