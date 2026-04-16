@@ -20,6 +20,7 @@
 - [Troubleshooting](#troubleshooting)
   - [libfranka: UDP receive: Timeout error](#libfranka-udp-receive-timeout-error)
   - [Running Without Realtime Kernel](#running-without-realtime-kernel)
+- [Services](#services)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -223,6 +224,29 @@ source install/setup.bash
 ```
 
 **Disclaimer**: If your application is heavy or your PC is not performing, doing this may hinder communication leading to a robot safety stop.
+
+## Services
+Here are some useful ros2 services which one may need when runnning the robot.
+
+### Set Full Collision Behavior
+
+Particularly useful when the robot has to interact with the environment (e.g. Bilateral Teleoperation, continuous contact tasks, etc.).
+
+Allows to change thresholds after which the robot goes into emergency stop:
+
+```bash
+# Example command to change the collision behavior
+ros2 service call /service_server/set_full_collision_behavior franka_msgs/srv/SetFullCollisionBehavior "{
+  lower_torque_thresholds_acceleration: [100.0, 100.0, 100.0, 100.0, 20.0, 20.0, 20.0],
+  upper_torque_thresholds_acceleration: [100.0, 100.0, 100.0, 100.0, 20.0, 20.0, 20.0],
+  lower_torque_thresholds_nominal: [100.0, 100.0, 100.0, 100.0, 20.0, 20.0, 20.0],
+  upper_torque_thresholds_nominal: [100.0, 100.0, 100.0, 100.0, 20.0, 20.0, 20.0],
+  lower_force_thresholds_acceleration: [10.0, 10.0, 10.0, 5.0, 5.0, 5.0],
+  upper_force_thresholds_acceleration: [20.0, 20.0, 20.0, 10.0, 10.0, 10.0],
+  lower_force_thresholds_nominal: [10.0, 10.0, 10.0, 5.0, 5.0, 5.0],
+  upper_force_thresholds_nominal: [30.0, 30.0, 30.0, 20.0, 20.0, 20.0]
+}"
+```
 
 
 ## Contributing
