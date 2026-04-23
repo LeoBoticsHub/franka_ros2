@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: franka_description
+    relative_path: robots/fer/fer.urdf.xacro
+  srdf:
+    relative_path: config/fer.srdf
+  package_settings:
+    author_name: Alessandro Bartesaghi
+    author_email: alexbartesaghi@gmail.com
+    generated_timestamp: 1776928309

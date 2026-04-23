@@ -1,0 +1,11 @@
+# Default initial positions for fer's ros2_control fake system
+# Using "ready" pose which is collision-free
+
+initial_positions:
+  fer_joint1: 0.0
+  fer_joint2: -0.785398  # -pi/4
+  fer_joint3: 0.0
+  fer_joint4: -2.356194  # -3*pi/4
+  fer_joint5: 0.0
+  fer_joint6: 1.570796   # pi/2
+  fer_joint7: 0.785398   # pi/4
