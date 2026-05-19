@@ -57,11 +57,12 @@ def launch_setup(context, *args, **kwargs):
     )
   
   # Spawn controllers
-  def controller_spawner(controllers, active=True):
+  def controller_spawner(controllers, active=True, condition=None):
     inactive_flags = ["--inactive"] if not active else []
     return Node(
           package="controller_manager",
           executable="spawner",
+          condition=condition,
           arguments=[
               "--controller-manager",
               "/controller_manager",
@@ -77,6 +78,8 @@ def launch_setup(context, *args, **kwargs):
     ]
   controller_spawners = [
         controller_spawner(controllers_active),
+        controller_spawner([initial_joint_controller], condition=IfCondition(activate_joint_controller)),
+        controller_spawner([initial_joint_controller], active=False, condition=UnlessCondition(activate_joint_controller)),
         # controller_spawner(controllers_inactive, active=False),
     ]
 
@@ -118,7 +121,7 @@ def generate_launch_description():
   launch_args = []
   launch_args.append(DeclareLaunchArgument(name="use_fake_hardware", default_value="true", description="use fake hardware"))
   launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))
-  launch_args.append(DeclareLaunchArgument(name="initial_joint_controller", default_value="joint_trajectory_controller", 
+  launch_args.append(DeclareLaunchArgument(name="initial_joint_controller", default_value="panda_arm_controller", 
                                            description="Initial joint controller to be activated"))
   launch_args.append(DeclareLaunchArgument(name="activate_joint_controller", default_value="true", 
                                            description="Whether to activate the initial controller or not"))
