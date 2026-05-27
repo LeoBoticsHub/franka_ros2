@@ -14,10 +14,10 @@
 
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-from launch_ros.actions import Node
+from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -28,6 +28,7 @@ def generate_launch_description():
     use_fake_hardware_parameter_name = 'use_fake_hardware'
     fake_sensor_commands_parameter_name = 'fake_sensor_commands'
     use_rviz_parameter_name = 'use_rviz'
+    namespace_parameter_name = 'namespace'
 
     robot_ip = LaunchConfiguration(robot_ip_parameter_name)
     arm_id = LaunchConfiguration(arm_id_parameter_name)
@@ -36,6 +37,7 @@ def generate_launch_description():
     fake_sensor_commands = LaunchConfiguration(
         fake_sensor_commands_parameter_name)
     use_rviz = LaunchConfiguration(use_rviz_parameter_name)
+    namespace = LaunchConfiguration(namespace_parameter_name)
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -64,21 +66,31 @@ def generate_launch_description():
             description='Use Franka Gripper as an end-effector, otherwise, the robot is loaded '
                         'without an end-effector.'),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([PathJoinSubstitution(
-                [FindPackageShare('franka_bringup'), 'launch', 'franka.launch.py'])]),
-            launch_arguments={robot_ip_parameter_name: robot_ip,
-                              arm_id_parameter_name: arm_id,
-                              load_gripper_parameter_name: load_gripper,
-                              use_fake_hardware_parameter_name: use_fake_hardware,
-                              fake_sensor_commands_parameter_name: fake_sensor_commands,
-                              use_rviz_parameter_name: use_rviz
-                              }.items(),
-        ),
-        Node(
-            package='controller_manager',
-            executable='spawner',
-            arguments=['forward_torque_controller'],
-            output='screen',
+        DeclareLaunchArgument(
+            namespace_parameter_name,
+            default_value='',
+            description='Optional robot namespace'),
+
+        GroupAction(
+            [
+                PushRosNamespace(namespace),
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([PathJoinSubstitution(
+                        [FindPackageShare('franka_bringup'), 'launch', 'franka.launch.py'])]),
+                    launch_arguments={robot_ip_parameter_name: robot_ip,
+                                      arm_id_parameter_name: arm_id,
+                                      load_gripper_parameter_name: load_gripper,
+                                      use_fake_hardware_parameter_name: use_fake_hardware,
+                                      fake_sensor_commands_parameter_name: fake_sensor_commands,
+                                      use_rviz_parameter_name: use_rviz
+                                      }.items(),
+                ),
+                Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=['forward_torque_controller'],
+                    output='screen',
+                ),
+            ],
         ),
     ])

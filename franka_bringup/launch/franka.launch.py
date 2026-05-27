@@ -14,6 +14,8 @@
 
 
 import os
+import tempfile
+import yaml
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchContext, LaunchDescription
@@ -30,6 +32,28 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 import xacro
+
+
+def namespace_controller_config(config_path, namespace):
+    namespace = namespace.strip('/')
+    if not namespace:
+        return config_path
+
+    with open(config_path, 'r') as config_file:
+        config = yaml.safe_load(config_file)
+
+    namespaced_config = {}
+    for node_name, node_config in config.items():
+        namespaced_config[f'/{namespace}/{node_name.strip("/")}'] = node_config
+
+    temp_file = tempfile.NamedTemporaryFile(
+        mode='w',
+        prefix=f'franka_{namespace.replace("/", "_")}_controllers_',
+        suffix='.yaml',
+        delete=False)
+    yaml.safe_dump(namespaced_config, temp_file)
+    temp_file.close()
+    return temp_file.name
 
 
 def robot_description_dependent_nodes_spawner(
@@ -59,8 +83,10 @@ def robot_description_dependent_nodes_spawner(
                                                'fake_sensor_commands': fake_sensor_commands_str,
                                            }).toprettyxml(indent='  ')
 
-    franka_controllers = PathJoinSubstitution(
-        [FindPackageShare('franka_bringup'), 'config', 'controllers.yaml'])
+    namespace = context.launch_configurations.get('ros_namespace', '')
+    franka_controllers = namespace_controller_config(
+        os.path.join(get_package_share_directory('franka_bringup'), 'config', 'controllers.yaml'),
+        namespace)
 
     return [
         Node(
@@ -69,6 +95,10 @@ def robot_description_dependent_nodes_spawner(
             name='robot_state_publisher',
             output='screen',
             parameters=[{'robot_description': robot_description}],
+            remappings=[
+                ('/tf', 'tf'),
+                ('/tf_static', 'tf_static'),
+            ],
         ),
         Node(
             package='controller_manager',
@@ -174,7 +204,12 @@ def generate_launch_description():
              executable='rviz2',
              name='rviz2',
              arguments=['--display-config', rviz_file],
-             condition=IfCondition(use_rviz)
+             condition=IfCondition(use_rviz),
+             remappings=[
+                 ('/robot_description', 'robot_description'),
+                 ('/tf', 'tf'),
+                 ('/tf_static', 'tf_static'),
+             ],
              )
 
     ])
