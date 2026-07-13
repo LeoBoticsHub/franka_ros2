@@ -110,8 +110,12 @@ As this is not an official release of libfranka, the user can install this versi
    ros-humble-realtime-tools \
    ros-humble-xacro \
    ros-humble-hardware-interface \
-    ros-humble-ros-gz \
-   python3-colcon-common-extensions
+   ros-humble-ros-gz \
+   libpoco-dev \
+   libssl-dev \
+   libboost-all-dev \
+   libtinyxml2-dev && \
+   python3-colcon-common-extensions 
    ```
 
 
